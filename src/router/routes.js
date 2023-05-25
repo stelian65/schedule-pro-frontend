@@ -7,12 +7,13 @@ import store from '../store/index'
 const routes = [
   {
     path: '', // Root route
-    redirect: '/home',
+    redirect: '/login',
   },
   {
     path: '/login',
     name:'Login',
-    component: LoginView
+    component: LoginView,
+    beforeEnter: (to,from, next) => {checkIsLogated(to,from,next)}
   }, 
   {
     path: '/home',
@@ -34,6 +35,14 @@ function  checkBefore(to,from ,next ){
     next(); // User is authenticated, allow access
   } else {
     next('/login'); // User is not authenticated, redirect to login page
+  }
+}
+
+function checkIsLogated(to,from ,next){
+  if (store.getters.isAuthenticated) {
+    next('/home'); // User is authenticated, allow access
+  } else{
+    next();
   }
 }
 

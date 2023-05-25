@@ -1,6 +1,17 @@
 <script setup>
+import { logout } from '../utils/logout';
+import {ref} from 'vue';
 
 
+function handleLogout(){
+   
+    logout();
+ 
+}
+
+async function handleRoute(){
+    return '/login';
+}
 </script>
 
 <template>
@@ -25,10 +36,18 @@
               <q-item clickable v-ripple>
                 <q-item-section avatar>
                   <q-icon name="inbox" ></q-icon>
+                
                 </q-item-section>
-  
                 <q-item-section>
                   Inbox
+                </q-item-section>
+              </q-item>
+              <q-item @click="handleLogout" :to="handleRoute" clickable v-ripple>
+                <q-item-section avatar>
+                  <q-icon name="inbox" ></q-icon>
+                </q-item-section>
+                <q-item-section>
+                  Logout
                 </q-item-section>
               </q-item>
   

@@ -9,6 +9,8 @@ const username = ref('');
 const password = ref('')
 const buttonRef = ref(HTMLButtonElement);
 const router = route();
+const userWrong= ref(false);
+
 
  async function handleLogIn(){
     var token;
@@ -20,16 +22,15 @@ const router = route();
     token =response.data.access_token;
     user = response.data.user;
     store.dispatch('login', { token, user });
-    
+    router.push('/home');
     }).catch( (error) =>{
         console.log(error);
+        userWrong.value = true
+        password.value=''
     })
 
 
-    if(store.getters.isAuthenticated){
-       router.push('/home')
-    }
-
+   
 }
     
 </script>
@@ -49,17 +50,23 @@ const router = route();
                 <q-icon name="person" size="sm"/>
                 </template>
             </q-input>
-            <q-input dense outlined class="q-mt-md" v-model="password" type="password" label="Password">
+            <q-input dense outlined class="q-mt-md" v-model="password" type="password" label="Password" @focus="userWrong=false">
                 <template v-slot:prepend>
                     <q-icon name="lock" size="sm"/>
                 </template>
             </q-input>
           </q-card-section>
           <q-card-section>
-            <q-btn ref="buttonRef" @click="handleLogIn()" style="
+            <q-btn ref="buttonRef" @click="handleLogIn()" to="/home" style="
             border-radius: 8px;" color="indigo-12" rounded size="md" label="Sign in"   no-caps class="full-width" ></q-btn>
           </q-card-section>
+           <q-card-section class="text-center q-pt-none q-pb-none" v-if="userWrong">
+           <div class="text-red-10 " >
+            <p > <q-icon size="sm" name="warning"/>Username or password are wrong </p>
+            </div>
+           </q-card-section>
         </q-card>
+        
       </q-page>
     </q-page-container>
   </q-layout>
