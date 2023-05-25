@@ -10,7 +10,9 @@
 
 <script>
 import { defineComponent } from 'vue'
+import store from '../store'
 
+console.log(store);
 export default defineComponent({
   name: 'IndexPage'
 })

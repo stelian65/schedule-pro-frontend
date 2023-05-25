@@ -1,4 +1,4 @@
-// store.js
+
 import Vuex from 'vuex';
 
 
@@ -18,12 +18,21 @@ import Vuex from 'vuex';
     },
     setUser(state, user) {
       state.user = user;
-    }
+    },
+    loadFromLocalStorage(state) {
+        const storedState = localStorage.getItem('store');
+        if (storedState) {
+          const parsedState = JSON.parse(storedState);
+          state.accessToken = parsedState.accessToken;
+          state.user = parsedState.user;
+        }
+      }
   },
   actions: {
     login({ commit }, { token, user }) {
       commit('setAccessToken', token);
       commit('setUser', user);
+      localStorage.setItem('store', JSON.stringify(this.state))
     },
     logout({ commit }) {
       commit('setAccessToken', '');
@@ -32,6 +41,7 @@ import Vuex from 'vuex';
         id: '',
         role: ''
       });
+      localStorage.removeItem('store');
     }
   },
   getters: {
@@ -40,5 +50,7 @@ import Vuex from 'vuex';
     getUser: state => state.user
   }
 });
+
+store.commit('loadFromLocalStorage');
 
 export default store;

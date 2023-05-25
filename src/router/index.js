@@ -1,7 +1,7 @@
 import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
-
+import { authorize } from 'src/utils/authorize'
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
