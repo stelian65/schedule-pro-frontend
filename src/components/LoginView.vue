@@ -1,33 +1,37 @@
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios'
-import store from '../store'
-import router from '../router'
+import axios from 'axios';
+import store from '../store';
+import  route from '../router/index';
 
-async function handleLogIn(){
+
+const username = ref('');
+const password = ref('')
+const buttonRef = ref(HTMLButtonElement);
+const router = route();
+
+ async function handleLogIn(){
     var token;
     var user ;
-     await axios.post("/api/auth/authenticate", {
+    await axios.post("/api/auth/authenticate", {
     username: username.value,
     password: password.value,
     }).then((response) => {
     token =response.data.access_token;
     user = response.data.user;
     store.dispatch('login', { token, user });
+    
     }).catch( (error) =>{
         console.log(error);
     })
+
+
     if(store.getters.isAuthenticated){
-        router().push("/home");
+       router.push('/home')
     }
 
-    
 }
-
-
-const username = ref('');
-const password = ref('')
-
+    
 </script>
 
 <template>
@@ -52,8 +56,8 @@ const password = ref('')
             </q-input>
           </q-card-section>
           <q-card-section>
-            <q-btn @click="handleLogIn" style="
-            border-radius: 8px;" color="indigo-12" rounded size="md" label="Sign in" no-caps class="full-width" ></q-btn>
+            <q-btn ref="buttonRef" @click="handleLogIn()" style="
+            border-radius: 8px;" color="indigo-12" rounded size="md" label="Sign in"   no-caps class="full-width" ></q-btn>
           </q-card-section>
         </q-card>
       </q-page>
