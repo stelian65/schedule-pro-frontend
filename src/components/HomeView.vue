@@ -1,69 +1,58 @@
 <script setup>
 import { logout } from '../utils/logout';
 import {ref} from 'vue';
+import { useRouter} from 'vue-router';
+import  ProfileMenu from '../components/ProfileMenu.vue';
+import LeftMenu  from '../components/LeftMenu.vue';
+
+const leftDrawerOpen = ref(false)
+const router = useRouter();
 
 
-function handleLogout(){
-   
-    logout();
+function toggleLeftDrawer () {
+        leftDrawerOpen.value = !leftDrawerOpen.value
+      }
+
+ async function handleLogout(){
+  
+    await logout();
+    router.push('/login');
+    
  
 }
 
-async function handleRoute(){
-    return '/login';
-}
+
 </script>
 
 <template>
-<div id="q-app">
-  <div class="q-pa-md">
-      <q-layout view="hHh Lpr lff" container style="height: 300px" class="shadow-2 rounded-borders">
-        <q-header elevated class="bg-black">
-          <q-toolbar>
-            <q-btn flat @click="drawer = !drawer" round dense icon="menu" ></q-btn>
-            <q-toolbar-title>Header</q-toolbar-title>
-          </q-toolbar>
-        </q-header>
-  
-        <q-drawer bordered
-          v-model="drawer"
-          :width="200"
-          :breakpoint="500"
-          show-if-above
+<q-layout view="hHh lpR fFf">
+
+<q-header elevated class="bg-primary text-white">
+  <q-toolbar>
+    <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+
+    <q-toolbar-title>
+    <strong>SCHEDULE PRO</strong>   
+    </q-toolbar-title>
+    <q-space/>
+    <ProfileMenu
+    @logout="handleLogout"
+    />
+  </q-toolbar>
+</q-header>
+
+<q-drawer show-if-above v-model="leftDrawerOpen" side="left" behavior="desktop" elevated    :width="200"
+        :breakpoint="500"
+        bordered
         >
-          <q-scroll-area class="fit">
-            <q-list padding class="menu-list">
-              <q-item clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="inbox" ></q-icon>
-                
-                </q-item-section>
-                <q-item-section>
-                  Inbox
-                </q-item-section>
-              </q-item>
-              <q-item @click="handleLogout" :to="handleRoute" clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="inbox" ></q-icon>
-                </q-item-section>
-                <q-item-section>
-                  Logout
-                </q-item-section>
-              </q-item>
-  
-              
-            </q-list>
-          </q-scroll-area>
-        </q-drawer>
-  
-        <q-page-container>
-          <q-page padding>
-            
-          </q-page>
-        </q-page-container>
-      </q-layout>
-    </div>
-    </div>
+  <LeftMenu/>
+</q-drawer>
+
+<q-page-container>
+  <router-view />
+</q-page-container>
+
+</q-layout>
 </template>
 
 <style scoped>

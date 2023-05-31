@@ -1,11 +1,14 @@
 import store from '../store'
 import axios from 'axios'
+import { useRouter} from 'vue-router'
 
-export function logout(){
+export async function logout(){
    const token = store.getters.getToken;
-    axios.get('/api/auth/logout',{
+   await  axios.get('/api/auth/logout',{
         headers:{
             Authorization: 'Bearer ' + token
         }
-    }).then(store.dispatch('logout'));
+    }).then(() => {
+        store.dispatch('logout');
+    });
 }

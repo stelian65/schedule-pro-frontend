@@ -2,15 +2,14 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import store from '../store';
-import  route from '../router/index';
+import { useRouter} from 'vue-router'
 
 
 const username = ref('');
 const password = ref('')
 const buttonRef = ref(HTMLButtonElement);
-const router = route();
 const userWrong= ref(false);
-
+const router = useRouter();
 
  async function handleLogIn(){
     var token;
@@ -22,7 +21,7 @@ const userWrong= ref(false);
     token =response.data.access_token;
     user = response.data.user;
     store.dispatch('login', { token, user });
-    router.push('/home');
+    router.push({ path: '/home' });
     }).catch( (error) =>{
         console.log(error);
         userWrong.value = true
@@ -57,7 +56,7 @@ const userWrong= ref(false);
             </q-input>
           </q-card-section>
           <q-card-section>
-            <q-btn ref="buttonRef" @click="handleLogIn()" to="/home" style="
+            <q-btn ref="buttonRef" @click="handleLogIn()" style="
             border-radius: 8px;" color="indigo-12" rounded size="md" label="Sign in"   no-caps class="full-width" ></q-btn>
           </q-card-section>
            <q-card-section class="text-center q-pt-none q-pb-none" v-if="userWrong">

@@ -1,12 +1,12 @@
 import LoginView from '../components/LoginView.vue'
 import HomeView from '../components/HomeView.vue'
-import App from '../App.vue'
+import RecordWorkingTime from '../components/LeftMenuComponents/RecordWorkingTime.vue'
 import store from '../store/index'
 
 
 const routes = [
   {
-    path: '', // Root route
+    path: '', 
     redirect: '/login',
   },
   {
@@ -20,7 +20,15 @@ const routes = [
     name:'Home',
     component: HomeView,
     meta:{ requiresAuth: true},
-    beforeEnter: (to,from, next) => {checkBefore(to,from,next)}
+    beforeEnter: (to,from, next) => {checkBefore(to,from,next)},
+    children: [
+      {
+        // UserProfile will be rendered inside User's <router-view>
+        // when /user/:id/profile is matched
+        path: '/record-time',
+        component: RecordWorkingTime
+      },
+    ]
 
   },
   {
