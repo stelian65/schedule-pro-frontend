@@ -1,4 +1,17 @@
 <script setup>
+import{ useRouter} from 'vue-router'
+
+const router = useRouter();
+ async function handleRecordWorkClick(){
+   await router.push('/record-time');
+}
+
+async function handleTasksClick(){
+   await router.push('/tasks');
+}
+
+
+
 </script>
 
 <template>
@@ -6,6 +19,7 @@
         <q-item
         clickable
         v-ripple
+        @click="handleRecordWorkClick"
         >
             <q-item-section avatar>
                 <q-icon  name="work" />
@@ -15,6 +29,7 @@
       <q-item
         clickable
         v-ripple
+        @click="handleTasksClick"
       >
         <q-item-section avatar>
           <q-icon name="task" />
