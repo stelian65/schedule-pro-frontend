@@ -10,6 +10,10 @@ async function handleTasksClick(){
    await router.push('/tasks');
 }
 
+async function handleRegister(){
+  await router.push('/register')
+}
+
 
 
 </script>
@@ -53,7 +57,17 @@ async function handleTasksClick(){
           <q-icon name="sunny" />
         </q-item-section>
         <q-item-section>Request for vacation</q-item-section>
-      </q-item>     
+      </q-item> 
+      <q-item
+        clickable
+        v-ripple
+        @click="handleRegister"
+        >
+            <q-item-section avatar>
+                <q-icon  name="add" />
+            </q-item-section>
+            <q-item-section>Register an employe</q-item-section>
+      </q-item>    
   </q-list>
 
 </template>

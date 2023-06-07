@@ -21,7 +21,7 @@ const config = {
 }
 
 
-axios.get('/api/task?username='+store.getters.getUser.username,config).then((response) =>{
+axios.get('/api/task?email='+store.getters.getUser.email,config).then((response) =>{
      options.value =response.data
 } );
 

@@ -2,6 +2,7 @@ import LoginView from '../components/LoginView.vue'
 import HomeView from '../components/HomeView.vue'
 import RecordWorkingTime from '../components/LeftMenuComponents/RecordWorkingTime.vue'
 import Tasks from '../components/LeftMenuComponents/ViewTasks.vue'
+import RegisterComponent from '../components/AdminUse/RegisterComponent.vue'
 import store from '../store/index'
 
 
@@ -31,6 +32,10 @@ const routes = [
         path: '/tasks',
         component: Tasks
       },
+      {
+        path:'/register',
+        component: RegisterComponent
+      }
     ]
 
   },

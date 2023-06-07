@@ -37,7 +37,9 @@ import Vuex from 'vuex';
     logout({ commit }) {
       commit('setAccessToken', '');
       commit('setUser', {
-        username: '',
+        email:'',
+        firstname:'',
+        lastname:'',
         id: '',
         role: ''
       });

@@ -3,7 +3,7 @@ import store from '../store';
 defineEmits(['logout','my-profile','my-stats'])
 
 const user = store.getters.getUser
-
+const label = user.firstname + ' ' + user.lastname;
 
 </script>
 
@@ -11,7 +11,7 @@ const user = store.getters.getUser
 <template>
 <q-btn flat @click="drawer = !drawer" round dense >
     <q-icon name="person"/>
-    {{user.username}}
+    {{ label }}
     <q-menu 
     anchor="bottom middle" 
     self="top right" 

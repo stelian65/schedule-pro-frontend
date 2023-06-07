@@ -15,7 +15,7 @@ const router = useRouter();
     var token;
     var user ;
     await axios.post("/api/auth/authenticate", {
-    username: username.value,
+    email: username.value,
     password: password.value,
     }).then((response) => {
     token =response.data.access_token;
