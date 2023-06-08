@@ -3,6 +3,7 @@ import HomeView from '../components/HomeView.vue'
 import RecordWorkingTime from '../components/LeftMenuComponents/RecordWorkingTime.vue'
 import Tasks from '../components/LeftMenuComponents/ViewTasks.vue'
 import RegisterComponent from '../components/AdminUse/RegisterComponent.vue'
+import TaskView from '../components/LeftMenuComponents/TaskView.vue'
 import store from '../store/index'
 
 
@@ -35,6 +36,12 @@ const routes = [
       {
         path:'/register',
         component: RegisterComponent
+      },
+      {
+        path: '/task/:id',
+        name:"Task",
+        component: TaskView,
+        props: true
       }
     ]
 
