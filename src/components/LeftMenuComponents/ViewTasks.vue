@@ -34,6 +34,8 @@ const paginatedTasks = computed( () => {
   return tasks.value.slice(start,end)
 
 })
+
+const notificationCount = ref(10)
  
 
   function handleClick(task){
@@ -97,5 +99,24 @@ const paginatedTasks = computed( () => {
 <style>
 .pagination{
   justify-content: center;
+}
+
+.inbox-button {
+  position: relative;
+}
+
+.notification {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
 }
 </style>

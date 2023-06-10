@@ -18,7 +18,7 @@ const label = user.firstname + ' ' + user.lastname;
     transition-show="flip-right"
     transition-hide="flip-left">
     <q-list  style="min-width: 150px" class="text-center">
-        <q-item clickable>
+        <q-item clickable @click ="$emit('my-profile')">
             <q-item-section>My Profile</q-item-section>
         </q-item>       
         <q-separator/>

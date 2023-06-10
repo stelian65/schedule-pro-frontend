@@ -4,7 +4,9 @@ import RecordWorkingTime from '../components/LeftMenuComponents/RecordWorkingTim
 import Tasks from '../components/LeftMenuComponents/ViewTasks.vue'
 import RegisterComponent from '../components/AdminUse/RegisterComponent.vue'
 import TaskView from '../components/LeftMenuComponents/TaskView.vue'
+import MyProfile from '../components/MyProfile.vue'
 import store from '../store/index'
+
 
 
 const routes = [
@@ -42,6 +44,11 @@ const routes = [
         name:"Task",
         component: TaskView,
         props: true
+      },
+      {
+        path:'/my-profile',
+        name:"Profile",
+        component:MyProfile
       }
     ]
 
