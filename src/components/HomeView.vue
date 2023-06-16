@@ -22,8 +22,12 @@ function toggleLeftDrawer () {
  
 }
 async function handleMyProfile (){
-  await logout();
-    router.push('/my-profile');
+
+   await router.push('/my-profile');
+}
+
+async function handleClickSchedule() {
+   await router.push('/home');
 }
 
 
@@ -36,7 +40,7 @@ async function handleMyProfile (){
   <q-toolbar>
     <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
     <q-toolbar-title>
-    <strong>SCHEDULE PRO</strong>   
+    <q-btn flat class="text-h6" @click="handleClickSchedule" ><strong>SCHEDULE PRO</strong></q-btn>
     </q-toolbar-title>
     <q-space/>
     <InboxMessage/>

@@ -1,11 +1,16 @@
-import LoginView from '../components/LoginView.vue'
-import HomeView from '../components/HomeView.vue'
-import RecordWorkingTime from '../components/LeftMenuComponents/RecordWorkingTime.vue'
-import Tasks from '../components/LeftMenuComponents/ViewTasks.vue'
-import RegisterComponent from '../components/AdminUse/RegisterComponent.vue'
-import TaskView from '../components/LeftMenuComponents/TaskView.vue'
-import MyProfile from '../components/MyProfile.vue'
-import store from '../store/index'
+import LoginView from '../components/LoginView.vue';
+import HomeView from '../components/HomeView.vue';
+import RecordWorkingTime from '../components/LeftMenuComponents/RecordWorkingTime.vue';
+import Tasks from '../components/LeftMenuComponents/ViewTasks.vue';
+import RegisterComponent from '../components/AdminUse/RegisterComponent.vue';
+import TaskView from '../components/LeftMenuComponents/TaskView.vue';
+import MyProfile from '../components/MyProfile.vue';
+import RequestPage from '../components/LeftMenuComponents/RequestPage.vue';
+import UserView from '../components/LeftMenuComponents/UserView.vue'
+import UserProfile from '../components/UserProfile.vue';
+import EditUser from '../components/EditUser.vue';
+import store from '../store/index';
+
 
 
 
@@ -49,6 +54,28 @@ const routes = [
         path:'/my-profile',
         name:"Profile",
         component:MyProfile
+      },
+      {
+        path:'/request',
+        name:"Request",
+        component:RequestPage
+      },
+      {
+        path:'/users',
+        name:"Users",
+        component:UserView
+      },
+      {
+        path:'/user-profile/:id',
+        name:'UserProfile',
+        component:UserProfile,
+        props: true
+      },
+      {
+        path:'/edit-user/:id',
+        name:'EditUser',
+        component:EditUser,
+        props: true
       }
     ]
 

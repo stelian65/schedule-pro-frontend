@@ -3,9 +3,17 @@
 import { ref,onBeforeMount } from 'vue';
 import store from '../store';
 import axios from 'axios';
-const token = store.getters.getToken;
-const userId = store.getters.getUser.id;
+import { useRouter } from 'vue-router';
 
+
+const props = defineProps({
+    id:Number
+})
+
+const router = useRouter();
+const token = store.getters.getToken;
+
+const persistent=ref(false);
 const firstName = ref('')
 const lastName = ref('')
 const experience = ref('')
@@ -22,11 +30,8 @@ const config = {
 }
 
 onBeforeMount(async () => {
-  if (!userId || !token) {
-    return;
-  }
   try {
-   await axios.get("/api/user/profile?userId="+userId,config).then((response) =>{
+   await axios.get("/api/user/profile?userId="+props.id,config).then((response) =>{
           let data = response.data;
           firstName.value = data.firstname;
           lastName.value = data.lastname;
@@ -44,7 +49,21 @@ onBeforeMount(async () => {
   }
 });
 
+async function handleEdit(){
+  await router.push({
+    name:'EditUser',
+    params:{id:props.id}
+  });
+}
 
+function handleDelete(){
+    persistent.value = true;
+}
+
+async function handleYesClick(){
+    await axios.delete("/api/user/delete?userId="+props.id,config)
+    router.push('/users')
+}
 
 const calculateProgress = (workedHours, totalHours) => (workedHours / totalHours) * 100;
 </script>
@@ -53,7 +72,13 @@ const calculateProgress = (workedHours, totalHours) => (workedHours / totalHours
     <q-page padding>
       <q-card class="my-card">
         <q-card-section>
-          <div class="text-h5 text-white">Personal Information</div>
+            <div class="text-right">
+                <q-btn @click="handleEdit" class="button" round flat icon ="edit" />
+                <q-btn @Click="handleDelete" class="button"  round flat icon ="delete" />
+            </div>
+          <div class="text-h5 text-white">Personal Information
+            
+          </div>
   
           <div class="text-white">First Name: {{ firstName}}</div>
           <div class="text-white">Last Name: {{ lastName }}</div>
@@ -78,10 +103,6 @@ const calculateProgress = (workedHours, totalHours) => (workedHours / totalHours
     </q-item>
   </q-list>
 </q-expansion-item>
-
-
-
-
       <div class="months-container">
         <q-card class="my-card" v-for="(work, index) in worked" :key="index">
           <q-card-section>
@@ -92,6 +113,17 @@ const calculateProgress = (workedHours, totalHours) => (workedHours / totalHours
           </q-card-section>
         </q-card>
       </div>
+      <q-dialog v-model="persistent" persistent>
+        <q-card class="bg-primary text-white" style="width: 300px">
+            <q-card-section>
+            <div class="text-h6 text-center">Are you sure you want to delete this user?</div>
+            </q-card-section>
+            <q-card-actions align="center" class="bg-white text-primary">
+            <q-btn flat label="no" v-close-popup />
+            <q-btn @click="handleYesClick" flat label="Yes" v-close-popup />
+            </q-card-actions>
+        </q-card>
+        </q-dialog>
     </q-page>
   </template>
   
@@ -107,6 +139,9 @@ const calculateProgress = (workedHours, totalHours) => (workedHours / totalHours
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+  }
+  .button{
+    margin-right: 20px;
   }
 
   </style>

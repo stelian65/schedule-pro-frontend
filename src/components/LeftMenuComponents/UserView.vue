@@ -6,45 +6,46 @@ import axios from 'axios';
 
 const router = useRouter();
 const token = store.getters.getToken;
+const role = store.getters.getUser.role;
 const config = {
     headers:{
             Authorization: 'Bearer ' + token
      }
 }
-const tasks = ref([])
-const selectedTask = ref(null);
+const users = ref([])
+const selectedUser = ref(null);
 const currentPage = ref(1);
 const itemsPerPage =10;
 
 onBeforeMount(async () => {
   try {
-   axios.get('/api/task/all',config).then((response)=>{
-    tasks.value = response.data
+   axios.get('/api/user/all',config).then((response)=>{
+    users.value = response.data
   })
   } catch (error) {
     console.error(error);
   }
 });
 
-const maxPage = computed(() => Math.ceil(tasks.value.length / itemsPerPage));
+const maxPage = computed(() => Math.ceil(users.value.length / itemsPerPage));
 
-const paginatedTasks = computed( () => {
+const paginatedUsers= computed( () => {
   const start = (currentPage.value -1 ) * itemsPerPage
   const end = start + itemsPerPage;
-  return tasks.value.slice(start,end)
+  return users.value.slice(start,end)
 
 })
 
-const notificationCount = ref(10)
  
-
-  function handleClick(task){
-  selectedTask.value = task;
+  function handleClick(user){
+    selectedUser.value = user
   router.push({
-    name:'Task',
-    params:{id:task.id}
+    name:'UserProfile',
+    params:{id:selectedUser.value.id}
   })
   }
+
+  
 
 
 </script>
@@ -54,7 +55,7 @@ const notificationCount = ref(10)
     <q-markup-table flat bordered>
       <thead class="bg-primary">
         <tr>
-          <th colspan="6">
+          <th colspan="3">
             <div class="row no-wrap items-center">
               <q-img
                 style="width: 70px"
@@ -63,30 +64,24 @@ const notificationCount = ref(10)
                 src="src\assets\task.jpeg"
               />
 
-              <div class="text-h4 q-ml-md text-white">Tasks</div>
+              <div class="text-h4 q-ml-md text-white">Users</div>
             </div>
           </th>
         </tr>
         <tr>
-          <th class="text-left text-white ">Title</th>
-          <th class="text-right text-white">Status</th>
-          <th class="text-right text-white">User assign</th>
-          <th class="text-right text-white">Due Date</th>
-          <th class="text-right text-white">Total worked hours</th>
-
+          <th class="text-left text-white ">Firstname</th>
+          <th class="text-right text-white">Lastname</th>
+          <th class="text-right text-white">Email</th>
         </tr>
       </thead>
       <tbody>
         <tr 
-        v-for="task in paginatedTasks" :key="task.title"
-        @click="handleClick(task)"
+        v-for="user in paginatedUsers" :key="user.id"
+        @click="handleClick(user)"
         >
-          <td class="text-left">{{ task.title }}</td>
-          <td class="text-right">{{task.taskStatus}}</td>
-          <td class="text-right" v-if="task.userAssign !== null" >{{ task.userAssign }}</td>
-          <td class="text-right" v-else >No user assigned</td>
-          <td class="text-right">{{ task.dueDate }}</td>
-          <td class="text-right">{{ task.totalHours }}</td>
+          <td class="text-left">{{ user.firstname }}</td>
+          <td class="text-right">{{ user.lastname  }}</td>
+          <td class="text-right">{{ user.email }}</td>
         </tr>  
       </tbody>  
     </q-markup-table>

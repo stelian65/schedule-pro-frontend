@@ -45,7 +45,7 @@ const unreadMessages = computed(() => {
 
 const markAllAsRead =async () => {
   await axios.put('/api/inbox/read?userId='+userId,config).catch((error)=> console.log(error))
-  messages.value = messages.value.map(m => ({...m, read: true}));
+  messages.value = messages.value.map(m => ({...m, shown: true}));
 };
 
 const deleteMessage = async (index,id) => {

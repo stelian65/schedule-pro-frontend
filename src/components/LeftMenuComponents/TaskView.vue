@@ -11,9 +11,9 @@ const props = defineProps({
     id:Number
 })
 
-const readonly = ref(true);
 const persistent =ref(false);
 const token = store.getters.getToken;
+const role = store.getters.getUser.role;
 const task = ref(null);
 const title = ref('');
 const dueDate = ref('');
@@ -40,7 +40,6 @@ onBeforeMount(async () => {
         description.value = task.value.description;
         userAssign.value = task.value.userAssign;
         totalHours.value =task.value.totalHours
-        console.log(task.value);
         })
   } catch (error) {
    await router.push("/home");
@@ -54,9 +53,13 @@ function handleClickDelete(){
 
 }
 
+function handleClickEdit(){
+
+}
+
 async function handleYesClick(){
   await axios.delete("/api/task/delete?id="+task.value.id,config);
-   router.push("/home");
+   router.push("/tasks");
 }
 
 
@@ -74,8 +77,8 @@ async function handleYesClick(){
                   <strong>Title: </strong>  {{ title }}
                 </div>
                 <div  class="col-  jutify-end">
-                    <q-btn round flat icon="edit"/>
-                    <q-btn @click="handleClickDelete" round flat icon="delete"/>
+                    <q-btn round v-if="role === 'ADMIN'" @click ="handleClickEdit" flat icon="edit"/>
+                    <q-btn  v-if="role === 'ADMIN'" @click="handleClickDelete" round flat icon="delete"/>
                 </div>
             </div>
         </q-card-section>
